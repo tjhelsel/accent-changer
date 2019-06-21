@@ -22,11 +22,7 @@ const createApp = () => {
   // compression middleware
   app.use(compression());
 
-  // session middleware with passport
-  app.use();
-
-  // auth and api routes
-  app.use('/auth', require('./auth'));
+  // api routes
   app.use('/api', require('./api'));
 
   // static file-serving middleware
