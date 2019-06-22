@@ -22,6 +22,10 @@ class InputForm extends Component {
     });
   }
 
+  convertText(str) {
+    
+  }
+
   handleSubmit = event => {
     event.preventDefault();
     const word = this.state.inputStr;
