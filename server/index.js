@@ -7,6 +7,11 @@ const db = require('./db');
 const PORT = process.env.PORT || 8080;
 const app = express();
 
+const odId = process.env.OD_ID;
+const odKey = process.env.OD_KEY;
+
+module.exports = { odId, odKey };
+
 module.exports = app;
 
 // if (process.env.NODE_ENV !== 'production') require('../secrets');

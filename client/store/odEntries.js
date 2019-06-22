@@ -1,10 +1,9 @@
 import axios from 'axios';
-const odId = process.env.OD_ID;
-const odKey = process.env.OD_KEY;
+import { odId, odKey } from '../../secrets';
 
 //ACTION TYPES
-const GET_WORD_PRON = 'GET_WORD_PRON';
-const GOT_PHRASE_PRON = 'GET_PHRASE_PRON';
+const GOT_WORD_PRON = 'GOT_WORD_PRON';
+const GOT_PHRASE_PRON = 'GOT_PHRASE_PRON';
 
 //INITIAL STATE
 
@@ -13,12 +12,12 @@ const initialState = [];
 //ACTION CREATORS
 
 const gotWordPron = word => ({
-  action: GET_WORD_PRON,
+  type: GOT_WORD_PRON,
   word
 });
 
 const gotPhrasePron = phrase => ({
-  action: GOT_PHRASE_PRON,
+  type: GOT_PHRASE_PRON,
   phrase
 });
 
@@ -143,13 +142,14 @@ const axiosConfig = {
 };
 
 export const getPron = word => {
+  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
   return async dispatch => {
     try {
       const { data } = await axios.get(
-        `https://od-api.oxforddictionaries.com/api/v2/entries/en-us/${word}?fields=pronunciations&strictMatch=false`,
+        proxyUrl +
+          `https://od-api.oxforddictionaries.com/api/v2/entries/en-us/${word}?fields=pronunciations&strictMatch=false`,
         axiosConfig
       );
-
       const pron =
         data.results[0].lexicalEntries[0].pronunciations[1].phoneticSpelling;
       console.log(pron);
@@ -164,7 +164,8 @@ export const getPron = word => {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_WORD_PRON:
+    case GOT_WORD_PRON:
+      console.log('action.word is ', action.word);
       return [...state, action.word];
     case GOT_PHRASE_PRON:
       return [...state, ...action.phrase];

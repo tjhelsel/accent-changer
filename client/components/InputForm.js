@@ -24,7 +24,7 @@ class InputForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const word = event.target.name;
+    const word = this.state.inputStr;
     this.props.getPron(word);
   };
 
