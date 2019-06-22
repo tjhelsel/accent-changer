@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { mwDict } from '../../utils/mwDict';
+import { getPron } from '../store/odEntries';
 
 class InputForm extends Component {
   constructor() {
@@ -13,7 +14,6 @@ class InputForm extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.convertText = this.convertText.bind(this);
   }
 
   handleChange(event) {
@@ -22,19 +22,10 @@ class InputForm extends Component {
     });
   }
 
-  convertText(text) {
-    const convertedLetters = text.split('').map(l => mwDict[l] || l);
-    return convertedLetters.join('');
-  }
-
-  handleSubmit = async event => {
+  handleSubmit = event => {
     event.preventDefault();
-
-    await this.setState(prevState => {
-      const converted = this.convertText(prevState.inputStr);
-      return { outputStr: converted };
-    });
-    console.log(this.state.outputStr);
+    const word = event.target.name;
+    this.props.getPron(word);
   };
 
   render() {
@@ -50,6 +41,7 @@ class InputForm extends Component {
           margin="normal"
           variant="outlined"
         />
+        <Button type="button">Get transcription</Button>
         <Button type="submit" disabled={!inputStr}>
           Submit
         </Button>
@@ -58,4 +50,11 @@ class InputForm extends Component {
   }
 }
 
-export default InputForm;
+const mapDispatchToProps = dispatch => ({
+  getPron: word => dispatch(getPron(word))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(InputForm);

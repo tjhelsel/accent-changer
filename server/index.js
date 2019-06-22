@@ -9,7 +9,7 @@ const app = express();
 
 module.exports = app;
 
-if (process.env.NODE_ENV !== 'production') require('../secrets');
+// if (process.env.NODE_ENV !== 'production') require('../secrets');
 
 const createApp = () => {
   // logging middleware
