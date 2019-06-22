@@ -9,7 +9,7 @@
     "deploy": "script/deploy",
     "heroku-postbuild": "webpack -p",
     "seed": "node script/seed.js",
-    "start": "node server",
+    "start": "node -r dotenv/config server",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & npm run start-server",
     "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
     "test": "NODE_ENV='test' mocha \"./server/**/*.spec.js\" \"./client/**/*.spec.js\" \"./script/**/*.spec.js\" --require @babel/polyfill --require @babel/register"
@@ -61,6 +61,7 @@
     "@material-ui/core": "^4.1.1",
     "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.6",
+    "dotenv": "^8.0.0",
     "nodemon": "^1.19.1",
     "react-test-renderer": "^16.8.6",
     "redux-devtools-extension": "^2.13.8",

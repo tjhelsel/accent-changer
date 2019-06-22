@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { odId, odKey } from '../../secrets';
+const odId = process.env.OD_ID;
+const odKey = process.env.OD_KEY;
 
 //ACTION TYPES
 const GET_WORD_PRON = 'GET_WORD_PRON';
