@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Sound from 'react-sound';
 import { connect } from 'react-redux';
 import { convertToIpa } from '../../utils/convertText';
-import { polly, params, createAudioUrl } from '../../public/polly';
+import { getAudio } from '../store/audios';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
@@ -19,16 +19,12 @@ class IpaTranscription extends Component {
   }
 
   render() {
+    console.log(this.props);
     const words = this.props.odEntries.map(obj => obj.word);
     const prons = this.props.odEntries.map(obj => obj.pron);
     const standardIpa = this.props.odEntries.reduce((acc, cur) => {
       return acc + ' ' + convertToIpa(cur.word, cur.pron);
     }, '');
-    const text = `<speak>
-    <phoneme alphabet="ipa" ph="${standardIpa}"></phoneme>. 
-    </speak>`;
-    console.log(text);
-    params.Text = text;
     return (
       <div>
         <Grid
@@ -55,14 +51,7 @@ class IpaTranscription extends Component {
                 {!this.state.audioUrl ? (
                   <Button
                     onClick={() => {
-                      polly.synthesizeSpeech(params, async (err, data) => {
-                        if (err) {
-                          console.log(err, err.stack);
-                        } else {
-                          const audioUrl = await createAudioUrl(data);
-                          this.getAudio(audioUrl);
-                        }
-                      });
+                      this.props.getAudio(standardIpa);
                     }}
                   >
                     Create Audio
@@ -95,4 +84,11 @@ const mapStateToProps = state => ({
   odEntries: state.odEntries
 });
 
-export default connect(mapStateToProps)(IpaTranscription);
+const mapDispatchToProps = dispatch => ({
+  getAudio: ipaStr => dispatch(getAudio(ipaStr))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IpaTranscription);
