@@ -4,6 +4,8 @@ import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { getPron } from '../store/odEntries';
+import { polly, params } from '../../public/polly';
+console.log(params);
 
 class InputForm extends Component {
   constructor() {
@@ -14,6 +16,7 @@ class InputForm extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.convertText = this.convertText.bind(this);
   }
 
   handleChange(event) {
@@ -23,7 +26,20 @@ class InputForm extends Component {
   }
 
   convertText(str) {
-    
+    polly.synthesizeSpeech(params, (err, data) => {
+      if (err) {
+        console.log(err, err.stack);
+      } else {
+        let uInt8Array = new Uint8Array(data.AudioStream);
+        let arrayBuffer = uInt8Array.buffer;
+        let blob = new Blob([arrayBuffer]);
+
+        let audio = $('audio');
+        let url = URL.createObjectURL(blob);
+        audio[0].src = url;
+        audio[0].play();
+      }
+    });
   }
 
   handleSubmit = event => {
@@ -45,7 +61,9 @@ class InputForm extends Component {
           margin="normal"
           variant="outlined"
         />
-        <Button type="button">Get transcription</Button>
+        <Button type="button" onClick={this.convertText}>
+          Get transcription
+        </Button>
         <Button type="submit" disabled={!inputStr}>
           Submit
         </Button>
