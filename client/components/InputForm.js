@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { getPron } from '../store/odEntries';
 import { polly, params } from '../../public/polly';
-console.log(params);
+import IpaTranscription from './IpaTranscription';
 
 class InputForm extends Component {
   constructor() {
@@ -51,23 +50,26 @@ class InputForm extends Component {
   render() {
     const inputStr = this.state.inputStr;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <TextField
-          fullWidth
-          label="Enter some text to accentuize..."
-          name="inputStr"
-          onChange={this.handleChange}
-          value={inputStr}
-          margin="normal"
-          variant="outlined"
-        />
-        <Button type="button" onClick={this.convertText}>
-          Get transcription
-        </Button>
-        <Button type="submit" disabled={!inputStr}>
-          Submit
-        </Button>
-      </form>
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <TextField
+            fullWidth
+            label="Enter some text to accentuize..."
+            name="inputStr"
+            onChange={this.handleChange}
+            value={inputStr}
+            margin="normal"
+            variant="outlined"
+          />
+          <Button type="button" onClick={this.convertText}>
+            Get transcription
+          </Button>
+          <Button type="submit" disabled={!inputStr}>
+            Submit
+          </Button>
+        </form>
+        <IpaTranscription />
+      </div>
     );
   }
 }

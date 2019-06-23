@@ -1,4 +1,4 @@
-
+import { amzId, amzKey } from '../secrets';
 
 AWS.config.accessKeyId = amzId;
 AWS.config.secretAccessKey = amzKey;
