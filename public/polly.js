@@ -8,8 +8,7 @@ export const polly = new AWS.Polly();
 
 export const params = {
   OutputFormat: 'mp3',
-  Text: 'You did it Terence!',
-  TextType: 'text',
+  TextType: 'ssml',
   VoiceId: 'Joanna'
 };
 
@@ -39,3 +38,11 @@ export const params = {
 //     }
 //   }
 // });
+
+export const createAudioUrl = data => {
+  let uInt8Array = new Uint8Array(data.AudioStream);
+  let arrayBuffer = uInt8Array.buffer;
+  let blob = new Blob([arrayBuffer]);
+  let url = URL.createObjectURL(blob);
+  return url;
+};

@@ -21,11 +21,11 @@ const stressedVowels = {
 
 //regex for detecting schwa, u, and i in stressed syllable:
 
-const stressedSchwa = /[ˈˌ][^ˈˌiʌæɑeɪaʊɛrɔouə]*ə/;
+const stressedSchwa = /([ˈˌ][^ˈˌiʌæɑeɪaʊɛɔouə]*)(ə)/;
 
-const stressedU = /[ˈˌ][^ˈˌiʌæɑeɪaʊɛərɔou]*u/;
+const stressedU = /([ˈˌ][^ˈˌiʌæɑeɪaʊɛəɔou]*)(u)/;
 
-const stressedI = /[ˈˌ][^ˈˌʌæɑeɪaʊɛərɔoui]*i/;
+const stressedI = /([ˈˌ][^ˈˌʌæɑeɪaʊɛəɔoui]*)(i)/;
 
 //regex for detecting one-syllable words with schwa, u, or i
 
@@ -35,7 +35,7 @@ const stressedI = /[ˈˌ][^ˈˌʌæɑeɪaʊɛərɔoui]*i/;
 
 // /[^ˈˌ]*u[^ˈˌ]*/
 
-const convertText = (word, pron) => {
+export const convertToIpa = (word, pron) => {
   if (haveNoStress[word]) return pron;
   let newPron = pron;
   if (pron.includes('ˈ')) {

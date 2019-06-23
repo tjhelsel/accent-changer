@@ -152,8 +152,7 @@ export const getPron = word => {
       );
       const pron =
         data.results[0].lexicalEntries[0].pronunciations[1].phoneticSpelling;
-      console.log(pron);
-      dispatch(gotWordPron(pron));
+      dispatch(gotWordPron({ word, pron }));
     } catch (error) {
       console.error(error);
     }
@@ -165,6 +164,7 @@ export const getPron = word => {
 export default (state = initialState, action) => {
   switch (action.type) {
     case GOT_WORD_PRON:
+      console.log(action.word);
       return [...state, action.word];
     case GOT_PHRASE_PRON:
       return [...state, ...action.phrase];
