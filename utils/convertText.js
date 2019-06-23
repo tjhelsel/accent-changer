@@ -44,9 +44,10 @@ export const convertToIpa = (word, pron) => {
     newPron = newPron.replace(stressedU, '$1uː');
     return newPron;
   } else {
+    newPron = 'ˈ' + newPron;
     newPron = newPron.replace('ə', 'ʌ');
-    newPron = newPron.replace('i', 'iː');
-    newPron = newPron.replace('u', 'uː');
+    // newPron = newPron.replace('i', 'iː');
+    // newPron = newPron.replace('u', 'uː');
     return newPron;
   }
 };

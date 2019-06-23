@@ -15,7 +15,7 @@ class InputForm extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.convertText = this.convertText.bind(this);
+    // this.convertText = this.convertText.bind(this);
   }
 
   handleChange(event) {
@@ -24,22 +24,22 @@ class InputForm extends Component {
     });
   }
 
-  convertText(str) {
-    polly.synthesizeSpeech(params, (err, data) => {
-      if (err) {
-        console.log(err, err.stack);
-      } else {
-        let uInt8Array = new Uint8Array(data.AudioStream);
-        let arrayBuffer = uInt8Array.buffer;
-        let blob = new Blob([arrayBuffer]);
+  // convertText(str) {
+  //   polly.synthesizeSpeech(params, (err, data) => {
+  //     if (err) {
+  //       console.log(err, err.stack);
+  //     } else {
+  //       let uInt8Array = new Uint8Array(data.AudioStream);
+  //       let arrayBuffer = uInt8Array.buffer;
+  //       let blob = new Blob([arrayBuffer]);
 
-        let audio = $('audio');
-        let url = URL.createObjectURL(blob);
-        audio[0].src = url;
-        audio[0].play();
-      }
-    });
-  }
+  //       let audio = $('audio');
+  //       let url = URL.createObjectURL(blob);
+  //       audio[0].src = url;
+  //       audio[0].play();
+  //     }
+  //   });
+  // }
 
   handleSubmit = event => {
     event.preventDefault();
@@ -61,9 +61,9 @@ class InputForm extends Component {
             margin="normal"
             variant="outlined"
           />
-          <Button type="button" onClick={this.convertText}>
+          {/* <Button type="button" onClick={this.convertText}>
             Get transcription
-          </Button>
+          </Button> */}
           <Button type="submit" disabled={!inputStr}>
             Submit
           </Button>

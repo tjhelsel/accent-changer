@@ -1,4 +1,5 @@
 import { amzId, amzKey } from '../secrets';
+import { createDecipher } from 'crypto';
 
 AWS.config.accessKeyId = amzId;
 AWS.config.secretAccessKey = amzKey;
