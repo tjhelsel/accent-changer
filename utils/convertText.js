@@ -39,9 +39,9 @@ const convertText = (word, pron) => {
   if (haveNoStress[word]) return pron;
   let newPron = pron;
   if (pron.includes('ˈ')) {
-    newPron = newPron.replace(stressedSchwa, '$1,ʌ');
-    newPron = newPron.replace(stressedI, '$1,iː');
-    newPron = newPron.replace(stressedU, '$1,uː');
+    newPron = newPron.replace(stressedSchwa, '$1ʌ');
+    newPron = newPron.replace(stressedI, '$1iː');
+    newPron = newPron.replace(stressedU, '$1uː');
     return newPron;
   } else {
     newPron = newPron.replace('ə', 'ʌ');
