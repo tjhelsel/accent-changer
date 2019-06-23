@@ -34,7 +34,7 @@ class IpaTranscription extends Component {
         <Grid
           container
           direction="row"
-          justify="center"
+          justify="space-around"
           alignItems="center"
           alignContent="center"
         >
@@ -42,12 +42,12 @@ class IpaTranscription extends Component {
           <Grid
             container
             item
-            xs={6}
+            xs={4}
             direction="column"
             justify="space-evenly"
             alignItems="center"
           >
-            <Grid container item xs={12} sm={2}>
+            <Grid container item xs={12} sm={10}>
               <Grid item xs>
                 {`Standardized to IPA: ${standardIpa}`}
               </Grid>
@@ -65,7 +65,7 @@ class IpaTranscription extends Component {
                       });
                     }}
                   >
-                    Create Audio{' '}
+                    Create Audio
                   </Button>
                 ) : (
                   <div>
