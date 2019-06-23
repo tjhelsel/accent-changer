@@ -1,5 +1,4 @@
-const amzId = 'AKIAI6PSXK7CZG32F7VA';
-const amzKey = 'sATlMVMXnibeNr3tfOjpV3ws2Q5ObC0PygxehgL3';
+
 
 AWS.config.accessKeyId = amzId;
 AWS.config.secretAccessKey = amzKey;
