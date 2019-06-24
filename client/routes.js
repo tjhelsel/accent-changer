@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 import { withRouter, Route, Switch } from 'react-router-dom';
 import InputForm from './components/InputForm';
+import SampleAudio from './components/SampleAudio';
 // import PropTypes from 'prop-types';
 
 /**
@@ -15,7 +16,7 @@ class Routes extends Component {
   render() {
     return (
       <Switch>
-        {/* Routes placed here are available to all visitors */}
+        <Route path="/samples" component={SampleAudio} />
         <Route path="/" component={InputForm} />
       </Switch>
     );

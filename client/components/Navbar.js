@@ -9,6 +9,7 @@ export const Navbar = () => (
     <nav>
       <div>
         <Link to="/">Home </Link>
+        <Link to="/samples">Sound samples</Link>
       </div>
     </nav>
     <hr />
