@@ -1,12 +1,10 @@
 const Transcription = require('./transcription');
 const Accent = require('./accent');
-const AccentFeature = require('./accentFeauture');
 
-Accent.hasMany(AccentFeature);
-AccentFeature.hasMany(AccentFeature);
+Accent.hasMany(Transcription);
+Transcription.belongsTo(Accent);
 
 module.exports = {
   Transcription,
-  Accent,
-  AccentFeature
+  Accent
 };
