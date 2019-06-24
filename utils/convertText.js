@@ -10,13 +10,8 @@ const haveNoStress = {
   to: true,
   an: true,
   the: true,
-  and: true
-};
-
-const stressedVowels = {
-  ə: 'ʌ',
-  i: 'iː',
-  u: 'uː'
+  and: true,
+  her: true
 };
 
 //regex for detecting schwa, u, and i in stressed syllable:
@@ -29,15 +24,10 @@ const stressedI = /([ˈˌ][^ˈˌʌæɑeɪaʊɛəɔoui]*)(i)/;
 
 //regex for detecting one-syllable words with schwa, u, or i
 
-// /[^ˈˌ]*ə[^ˈˌ]*/
-
-// /[^ˈˌ]*i[^ˈˌ]*/
-
-// /[^ˈˌ]*u[^ˈˌ]*/
-
 export const convertToIpa = (word, pron) => {
   if (haveNoStress[word]) return pron;
   let newPron = pron;
+  newPron = newPron.replace(/(\(ə\))/, '');
   if (pron.includes('ˈ')) {
     newPron = newPron.replace(stressedSchwa, '$1ʌ');
     newPron = newPron.replace(stressedI, '$1iː');
@@ -46,8 +36,18 @@ export const convertToIpa = (word, pron) => {
   } else {
     newPron = 'ˈ' + newPron;
     newPron = newPron.replace('ə', 'ʌ');
-    // newPron = newPron.replace('i', 'iː');
-    // newPron = newPron.replace('u', 'uː');
     return newPron;
   }
+};
+
+export const convertToAccent = (accent, ipaStr) => {
+  const subChars = accent.subChars;
+  const subs = accent.subs;
+  let accented = ipaStr;
+  for (let i = 0; i < subChars.length; i++) {
+    const sub = new RegExp('(?<!-)' + subChars[i] + '(?!-)', 'g');
+    accented = accented.replace(sub, `-${subs[subChars[i]]}-`);
+  }
+  accented = accented.replace(/-/g, '');
+  return accented;
 };

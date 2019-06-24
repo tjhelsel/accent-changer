@@ -4,6 +4,7 @@ import { odId, odKey } from '../../secrets';
 //ACTION TYPES
 const GOT_WORD_PRON = 'GOT_WORD_PRON';
 const GOT_PHRASE_PRON = 'GOT_PHRASE_PRON';
+const REMOVED_WORD = 'REMOVED_WORD';
 
 //INITIAL STATE
 
@@ -21,117 +22,10 @@ const gotPhrasePron = phrase => ({
   phrase
 });
 
-//THUNK CREATORS
-
-// MW API lookup--removed because of difficulty parsing.
-// const getWordPron = (word) => {
-//   return async dispatch => {
-//     try {
-//       const {data} = await axios.get(`https://dictionaryapi.com/api/v3/references/collegiate/json/${word}/key=${process.env.MWKEY}`);
-//       dispatch(gotWordPron(data))
-//     } catch (error) {
-//       console.error(error)
-//     }
-//   }
-// }
-
-const help = {
-  id: 'help',
-  metadata: {
-    operation: 'retrieve',
-    provider: 'Oxford University Press',
-    schema: 'RetrieveEntry'
-  },
-  results: [
-    {
-      id: 'help',
-      language: 'en-us',
-      lexicalEntries: [
-        {
-          language: 'en-us',
-          lexicalCategory: {
-            id: 'verb',
-            text: 'Verb'
-          },
-          pronunciations: [
-            {
-              audioFile:
-                'http://audio.oxforddictionaries.com/en/mp3/help_us_1.mp3',
-              dialects: ['American English'],
-              phoneticNotation: 'respell',
-              phoneticSpelling: 'help'
-            },
-            {
-              audioFile:
-                'http://audio.oxforddictionaries.com/en/mp3/help_us_1.mp3',
-              dialects: ['American English'],
-              phoneticNotation: 'IPA',
-              phoneticSpelling: 'hɛlp'
-            }
-          ],
-          text: 'help'
-        },
-        {
-          language: 'en-us',
-          lexicalCategory: {
-            id: 'noun',
-            text: 'Noun'
-          },
-          pronunciations: [
-            {
-              audioFile:
-                'http://audio.oxforddictionaries.com/en/mp3/help_us_1.mp3',
-              dialects: ['American English'],
-              phoneticNotation: 'respell',
-              phoneticSpelling: 'help'
-            },
-            {
-              audioFile:
-                'http://audio.oxforddictionaries.com/en/mp3/help_us_1.mp3',
-              dialects: ['American English'],
-              phoneticNotation: 'IPA',
-              phoneticSpelling: 'hɛlp'
-            }
-          ],
-          text: 'help'
-        },
-        {
-          language: 'en-us',
-          lexicalCategory: {
-            id: 'interjection',
-            text: 'Interjection'
-          },
-          pronunciations: [
-            {
-              audioFile:
-                'http://audio.oxforddictionaries.com/en/mp3/help_us_1.mp3',
-              dialects: ['American English'],
-              phoneticNotation: 'respell',
-              phoneticSpelling: 'help'
-            },
-            {
-              audioFile:
-                'http://audio.oxforddictionaries.com/en/mp3/help_us_1.mp3',
-              dialects: ['American English'],
-              phoneticNotation: 'IPA',
-              phoneticSpelling: 'hɛlp'
-            }
-          ],
-          text: 'help'
-        }
-      ],
-      type: 'headword',
-      word: 'help'
-    }
-  ],
-  word: 'help'
-};
-
-// axios.defaults.headers.common['header'] = {
-//   Accept: 'application/json',
-//   app_id: odId,
-//   app_key: odKey
-// };
+const removedWord = word => ({
+  type: REMOVED_WORD,
+  word
+});
 
 const axiosConfig = {
   headers: {
@@ -167,6 +61,10 @@ export default (state = initialState, action) => {
       return [...state, action.word];
     case GOT_PHRASE_PRON:
       return [...state, ...action.phrase];
+    case REMOVED_WORD:
+      return [...state].filter(entry => {
+        return entry.name !== action.word.name && entry.ipa !== action.word.ipa;
+      });
     default:
       return state;
   }

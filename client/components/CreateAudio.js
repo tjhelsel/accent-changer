@@ -24,7 +24,6 @@ class CreateAudio extends Component {
 
   render() {
     const audioUrl = this.state.audioUrl;
-    console.log(this.props.audios);
     return (
       <div>
         <Button
