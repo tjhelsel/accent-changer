@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { getAccents, getAccent } from '../store/accents';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import GridList from '@material-ui/core/GridList';
 import Button from '@material-ui/core/Button';
 import { getPron } from '../store/transcriptions';
 import IpaTranscription from './IpaTranscription';
@@ -44,7 +46,9 @@ class InputForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.getAccents();
+  }
 
   handleChange(event) {
     this.setState({
@@ -54,13 +58,19 @@ class InputForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    const [accent] = this.props.accents.filter(
+      acc => acc.name === this.state.accent
+    );
+    console.log(accent);
     const word = this.state.inputStr;
-    this.props.getPron(word);
+    this.props.getPron(word, accent);
+    this.setState({ inputStr: '' });
   };
 
   render() {
     const { classes } = this.props;
     const inputStr = this.state.inputStr;
+    const accent = this.state.accent;
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -83,12 +93,13 @@ class InputForm extends Component {
             </Grid>
             <Grid item xs={3}>
               <FormControl
-                variant="filled"
+                variant="outlined"
                 className={classes.formControl}
                 fullWidth
               >
                 <InputLabel>Accent</InputLabel>
                 <Select
+                  color="primary"
                   value={this.state.accent}
                   name="accent"
                   onChange={this.handleChange}
@@ -107,7 +118,7 @@ class InputForm extends Component {
                 variant="contained"
                 type="submit"
                 className={classes.button}
-                disabled={!inputStr}
+                disabled={!inputStr || !accent}
                 xs={2}
                 fullWidth
                 color="primary"
@@ -117,18 +128,25 @@ class InputForm extends Component {
             </Grid>
           </Grid>
         </form>
-        <IpaTranscription />
+        <GridList>
+          {this.props.transcriptions.map(transcription => {
+            <IpaTranscription />;
+          })}
+        </GridList>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  transcriptions: state.transcriptions
+  transcriptions: state.transcriptions,
+  accents: state.accents
 });
 
 const mapDispatchToProps = dispatch => ({
-  getPron: word => dispatch(getPron(word))
+  getPron: (word, accent) => dispatch(getPron(word, accent)),
+  getAccents: () => dispatch(getAccents()),
+  getAccent: accent => dispatch(getAccent(accent))
 });
 
 const InputFormConnected = connect(

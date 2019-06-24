@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { odId, odKey } from '../../secrets';
+import { convertToAccent } from '../../utils/convertText';
 
 //ACTION TYPES
 const GOT_WORD_PRON = 'GOT_WORD_PRON';
@@ -35,7 +36,7 @@ const axiosConfig = {
   }
 };
 
-export const getPron = word => {
+export const getPron = (word, accent) => {
   const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
   return async dispatch => {
     try {
@@ -44,9 +45,10 @@ export const getPron = word => {
           `https://od-api.oxforddictionaries.com/api/v2/entries/en-us/${word}?fields=pronunciations&strictMatch=false`,
         axiosConfig
       );
-      const pron =
+      const dictPron =
         data.results[0].lexicalEntries[0].pronunciations[1].phoneticSpelling;
-      dispatch(gotWordPron({ word, pron }));
+      const accentedPron = convertToAccent(accent, dictPron);
+      dispatch(gotWordPron({ word, dictPron, accent, accentedPron }));
     } catch (error) {
       console.error(error);
     }
@@ -58,6 +60,7 @@ export const getPron = word => {
 export default (state = initialState, action) => {
   switch (action.type) {
     case GOT_WORD_PRON:
+      console.log(action.word);
       return [...state, action.word];
     case GOT_PHRASE_PRON:
       return [...state, ...action.phrase];

@@ -11,8 +11,9 @@ const gotAccent = accent => ({
   accent
 });
 
-const gotAccents = () => ({
-  type: GOT_ACCENTS
+const gotAccents = accents => ({
+  type: GOT_ACCENTS,
+  accents
 });
 
 //INITIAL STATE
@@ -21,10 +22,22 @@ const initialState = [];
 
 //THUNK CREATORS
 
-const getAccents = () => {
+export const getAccent = accent => {
+  return async dispatch => {
+    try {
+      const { data } = await axios.get(`/api/accents/${accent}`);
+      dispatch(gotAccent(data));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const getAccents = () => {
   return async dispatch => {
     try {
       const { data } = await axios.get('/api/accents');
+      dispatch(gotAccents(data));
     } catch (error) {
       console.error(error);
     }
@@ -38,7 +51,7 @@ export default (state = initialState, action) => {
     case GOT_ACCENT:
       return [...state].filter(el => el.name === action.accent);
     case GOT_ACCENTS:
-      return [...state];
+      return [...state].concat(action.accents);
     default:
       return state;
   }
