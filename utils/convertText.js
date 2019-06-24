@@ -39,7 +39,7 @@ export const convertToIpa = (word, pron) => {
     return newPron;
   }
 };
-
+  
 export const convertToAccent = (accent, ipaStr) => {
   const subChars = accent.subChars;
   const subs = accent.subs;
@@ -51,3 +51,12 @@ export const convertToAccent = (accent, ipaStr) => {
   accented = accented.replace(/-/g, '');
   return accented;
 };
+
+
+//  = /([ˈˌ][^ˈˌiʌæɑeɪaʊɛɔouC]*)(ə)/;
+
+ const nyc = {
+  "ɔ": "ɔə",
+  "u": "ʊu",
+
+ }
