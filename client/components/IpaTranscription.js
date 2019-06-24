@@ -5,12 +5,15 @@ import CreateAudio from './CreateAudio';
 import { createAudio } from '../store/audios';
 import Grid from '@material-ui/core/Grid';
 
+
+
 class IpaTranscription extends Component {
   render() {
     const prons = this.props.transcriptions.map(obj => obj.pron);
     const standardIpa = this.props.transcriptions.reduce((acc, cur) => {
       return acc + ' ' + convertToIpa(cur.word, cur.pron);
     }, '');
+    console.log(this.props.transcriptions);
     return (
       <div>
         <Grid

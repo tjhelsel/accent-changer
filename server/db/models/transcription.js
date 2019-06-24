@@ -9,6 +9,14 @@ const Transcription = db.define('transcription', {
       notEmpty: true
     }
   },
+  accent: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: 'General American',
+    validate: {
+      notEmpty: true
+    }
+  },
   ipa: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -18,8 +26,7 @@ const Transcription = db.define('transcription', {
   },
   audioUrl: {
     type: Sequelize.STRING
-  },
-  accent: Sequelize.STRING
+  }
 });
 
 module.exports = Transcription;

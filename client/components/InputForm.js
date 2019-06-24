@@ -4,6 +4,15 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { getPron } from '../store/transcriptions';
 import IpaTranscription from './IpaTranscription';
+import { makeStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import FilledInput from '@material-ui/core/FilledInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 class InputForm extends Component {
   constructor() {
@@ -15,6 +24,8 @@ class InputForm extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  componentDidMount() {}
 
   handleChange(event) {
     this.setState({
@@ -42,6 +53,21 @@ class InputForm extends Component {
             margin="normal"
             variant="outlined"
           />
+          {/* <FormControl variant="filled" className={classes.formControl}>
+            <InputLabel htmlFor="filled-age-simple">Age</InputLabel>
+            <Select
+              value={values.age}
+              onChange={handleChange}
+              input={<FilledInput name="age" id="filled-age-simple" />}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl> */}
           <Button type="submit" disabled={!inputStr}>
             Transcribe
           </Button>
@@ -52,11 +78,15 @@ class InputForm extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  transcriptions: state.transcriptions
+});
+
 const mapDispatchToProps = dispatch => ({
   getPron: word => dispatch(getPron(word))
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(InputForm);
