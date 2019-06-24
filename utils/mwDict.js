@@ -1,4 +1,3 @@
-
 const findInInflections = (word, inflections) => {
   for (let i = 0; i < inflections.length; i++) {
     const infl = inflections[i].if.replace(/\*/gi, '');
@@ -34,5 +33,3 @@ export const getPron = (word, rawData) => {
 
   return false;
 };
-
-console.log(getPron('had', had));

@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { getPron } from '../store/odEntries';
-import { polly, params } from '../../public/polly';
+import { getPron } from '../store/transcriptions';
 import IpaTranscription from './IpaTranscription';
 
 class InputForm extends Component {

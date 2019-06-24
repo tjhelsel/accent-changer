@@ -7,15 +7,14 @@ import Grid from '@material-ui/core/Grid';
 
 class IpaTranscription extends Component {
   render() {
-    const prons = this.props.odEntries.map(obj => obj.pron);
-    const standardIpa = this.props.odEntries.reduce((acc, cur) => {
+    const prons = this.props.transcriptions.map(obj => obj.pron);
+    const standardIpa = this.props.transcriptions.reduce((acc, cur) => {
       return acc + ' ' + convertToIpa(cur.word, cur.pron);
     }, '');
     return (
       <div>
         <Grid
           container
-          xs={12}
           direction="row"
           justify="space-around"
           alignItems="center"
@@ -38,7 +37,7 @@ class IpaTranscription extends Component {
               justify="space-between"
               alignItems="center"
             >
-              <Grid item>{`Standardized to IPA: ${standardIpa}`}</Grid>
+              <Grid item xs={9}>{`Standardized to IPA: ${standardIpa}`}</Grid>
               <Grid item xs={3}>
                 <CreateAudio ipaStr={standardIpa} />
               </Grid>
@@ -57,7 +56,7 @@ class IpaTranscription extends Component {
 }
 
 const mapStateToProps = state => ({
-  odEntries: state.odEntries
+  transcriptions: state.transcriptions
 });
 
 const mapDispatchToProps = dispatch => ({

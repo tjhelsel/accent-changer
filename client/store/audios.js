@@ -44,7 +44,6 @@ export const createAudio = ipaStr => {
 export default (state = initialState, action) => {
   switch (action.type) {
     case CREATED_AUDIO:
-      console.log('action dispatched!');
       return [...state, action.audio];
     default:
       return state;
