@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { getAccents, getAccent } from '../store/accents';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import GridList from '@material-ui/core/GridList';
 import Button from '@material-ui/core/Button';
 import { getPron } from '../store/transcriptions';
 import IpaTranscription from './IpaTranscription';
@@ -14,6 +13,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,6 +32,12 @@ const useStyles = makeStyles(theme => ({
   },
   input: {
     display: 'none'
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    backgroundColor: '#FFC107'
   }
 }));
 
@@ -74,65 +80,67 @@ class InputForm extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <Grid
-            container
-            direction="row"
-            justify="space-evenly"
-            alignItems="center"
-          >
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="Enter some text to accentuize..."
-                name="inputStr"
-                onChange={this.handleChange}
-                value={inputStr}
-                margin="normal"
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <FormControl
-                variant="outlined"
-                className={classes.formControl}
-                fullWidth
-              >
-                <InputLabel>Accent</InputLabel>
-                <Select
-                  color="primary"
-                  value={this.state.accent}
-                  name="accent"
+          <Paper className={classes.paper}>
+            <Grid
+              container
+              direction="row"
+              justify="space-evenly"
+              alignItems="center"
+            >
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  label="Enter some text to accentuize..."
+                  name="inputStr"
                   onChange={this.handleChange}
-                  input={<FilledInput name="age" id="filled-age-simple" />}
+                  value={inputStr}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <FormControl
+                  variant="outlined"
+                  className={classes.formControl}
+                  fullWidth
                 >
-                  <MenuItem value="General American">
-                    <em>General American</em>
-                  </MenuItem>
-                  <MenuItem value="Southern">Southern</MenuItem>
-                  <MenuItem value="Inland Northern">Inland Northern</MenuItem>
-                </Select>
-              </FormControl>
+                  <InputLabel>Accent</InputLabel>
+                  <Select
+                    color="primary"
+                    value={this.state.accent}
+                    name="accent"
+                    onChange={this.handleChange}
+                    input={<FilledInput name="age" id="filled-age-simple" />}
+                  >
+                    <MenuItem value="General American">
+                      <em>General American</em>
+                    </MenuItem>
+                    <MenuItem value="Southern">Southern</MenuItem>
+                    <MenuItem value="Inland Northern">Inland Northern</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={2}>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  className={classes.button}
+                  disabled={!inputStr || !accent}
+                  xs={2}
+                  fullWidth
+                  color="primary"
+                >
+                  Transcribe
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={2}>
-              <Button
-                variant="contained"
-                type="submit"
-                className={classes.button}
-                disabled={!inputStr || !accent}
-                xs={2}
-                fullWidth
-                color="primary"
-              >
-                Transcribe
-              </Button>
-            </Grid>
-          </Grid>
+          </Paper>
         </form>
-        <GridList>
-          {this.props.transcriptions.map(transcription => {
-            <IpaTranscription />;
-          })}
-        </GridList>
+        {this.props.transcriptions.map((transcription, idx) => (
+          <Grid item key={idx}>
+            <IpaTranscription transcription={transcription} />
+          </Grid>
+        ))}
       </div>
     );
   }

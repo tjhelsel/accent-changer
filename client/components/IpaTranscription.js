@@ -1,72 +1,62 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { convertToIpa } from '../../utils/convertText';
+import React from 'react';
 import CreateAudio from './CreateAudio';
-import { createAudio } from '../store/audios';
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
+import Paper from '@material-ui/core/Paper';
 
-
-class IpaTranscription extends Component {
-  render() {
-    const prons = this.props.transcriptions.map(obj => obj.pron);
-    const standardIpa = this.props.transcriptions.reduce((acc, cur) => {
-      return acc + ' ' + convertToIpa(cur.word, cur.pron);
-    }, '');
-    console.log(this.props.transcriptions);
-    return (
-      <div>
-        <Grid
-          container
-          direction="row"
-          justify="space-around"
-          alignItems="center"
-          alignContent="center"
-        >
-          <Grid item xs={4}>{`OD pronunciation: ${prons.join(' ')}`}</Grid>
-          <Grid
-            container
-            item
-            xs={8}
-            direction="column"
-            justify="space-evenly"
-            alignItems="center"
-          >
-            <Grid
-              container
-              item
-              xs={12}
-              direction="row"
-              justify="space-between"
-              alignItems="center"
-            >
-              <Grid item xs={9}>{`Standardized to IPA: ${standardIpa}`}</Grid>
-              <Grid item xs={3}>
-                <CreateAudio ipaStr={standardIpa} />
-              </Grid>
-            </Grid>
-            {/* <Grid item xs={12} sm={2}>
-            Accent 2
-            </Grid>
-            <Grid item xs={12} sm={2}>
-            Accent 3
-          </Grid> */}
-          </Grid>
-        </Grid>
-      </div>
-    );
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary
   }
-}
+}));
 
-const mapStateToProps = state => ({
-  transcriptions: state.transcriptions
-});
+const IpaTranscription = props => {
+  const classes = useStyles();
+  const transcription = props.transcription;
+  return (
+    <div style={{ margin: '15px 0px' }}>
+      <Grid
+        container
+        direction="row"
+        justify="space-between"
+        alignItems="center"
+        alignContent="center"
+      >
+        <Grid item xs={3}>
+          <Paper className={classes.paper}>
+            {`OD pronunciation: ${transcription.dictPron}`}
+          </Paper>
+        </Grid>
 
-const mapDispatchToProps = dispatch => ({
-  getAudio: ipaStr => dispatch(createAudio(ipaStr))
-});
+        <Grid item xs={6}>
+          <Paper className={classes.paper}>
+            {`Pronunciation in ${transcription.accent.name}:
+${transcription.accentedPron}`}
+          </Paper>
+        </Grid>
+        <Grid item xs={2}>
+          <Paper className={classes.paper}>
+            <CreateAudio ipaStr={transcription.accentedPron} />
+          </Paper>
+        </Grid>
+      </Grid>
+    </div>
+  );
+};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IpaTranscription);
+// const mapStateToProps = state => ({
+//   transcriptions: state.transcriptions
+// });
+
+// const mapDispatchToProps = dispatch => ({
+//   getAudio: ipaStr => dispatch(createAudio(ipaStr))
+// });
+
+export default IpaTranscription;

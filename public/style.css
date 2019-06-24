@@ -1,5 +1,8 @@
 body {
   font-family: sans-serif;
+  background-image: url('https://wallup.net/wp-content/uploads/2017/11/23/416541-Linguistics-Vowels-International_Phonetic_Alphabet-languages-748x421.jpg');
+  background-size: cover;
+  color: white;
 }
 
 a {
@@ -13,5 +16,5 @@ label {
 nav a {
   display: inline-block;
   margin: 1em;
+  color: white;
 }
-

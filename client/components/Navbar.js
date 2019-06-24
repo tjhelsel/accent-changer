@@ -4,7 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export const Navbar = () => (
-  <div>
+  <div id="navbar">
     <h1>Accentuize</h1>
     <nav>
       <div>
