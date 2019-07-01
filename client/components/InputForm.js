@@ -67,7 +67,6 @@ class InputForm extends Component {
     const [accent] = this.props.accents.filter(
       acc => acc.name === this.state.accent
     );
-    console.log(accent);
     const word = this.state.inputStr;
     this.props.getPron(word, accent);
     this.setState({ inputStr: '' });
@@ -90,7 +89,7 @@ class InputForm extends Component {
               <Grid item xs={6}>
                 <TextField
                   fullWidth
-                  label="Enter some text to accentuize..."
+                  label="Enter a word to transcribe..."
                   name="inputStr"
                   onChange={this.handleChange}
                   value={inputStr}

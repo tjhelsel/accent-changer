@@ -60,7 +60,6 @@ export const getPron = (word, accent) => {
 export default (state = initialState, action) => {
   switch (action.type) {
     case GOT_WORD_PRON:
-      console.log(action.word);
       return [...state, action.word];
     case GOT_PHRASE_PRON:
       return [...state, ...action.phrase];
