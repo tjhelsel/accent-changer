@@ -4,7 +4,7 @@ import { getAccents, getAccent } from '../store/accents';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { getPron } from '../store/transcriptions';
+import { getPron, getPhrasePron } from '../store/transcriptions';
 import IpaTranscription from './IpaTranscription';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/styles';
@@ -67,9 +67,8 @@ class InputForm extends Component {
     const [accent] = this.props.accents.filter(
       acc => acc.name === this.state.accent
     );
-    console.log(accent);
     const word = this.state.inputStr;
-    this.props.getPron(word, accent);
+    this.props.getPhrasePron(word, accent);
     this.setState({ inputStr: '' });
   };
 
@@ -153,6 +152,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getPron: (word, accent) => dispatch(getPron(word, accent)),
+  getPhrasePron: (phrase, accent) => dispatch(getPhrasePron(phrase, accent)),
   getAccents: () => dispatch(getAccents()),
   getAccent: accent => dispatch(getAccent(accent))
 });

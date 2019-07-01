@@ -55,6 +55,30 @@ export const getPron = (word, accent) => {
   };
 };
 
+export const getPhrasePron = (phrase, accent) => {
+  const words = phrase.split(' ');
+  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  return async dispatch => {
+    try {
+      const transcribedWords = await words.reduce(async (acc, word) => {
+        const { data } = await axios.get(
+          proxyUrl +
+            `https://od-api.oxforddictionaries.com/api/v2/entries/en-us/${word}?fields=pronunciations&strictMatch=false`,
+          axiosConfig
+        );
+        const dictPron =
+          data.results[0].lexicalEntries[0].pronunciations[1].phoneticSpelling;
+        return acc + ' ' + dictPron;
+      }, '');
+      console.log('words after loop: ', transcribedWords);
+      const accentedPron = convertToAccent(accent, transcribedWords);
+      dispatch(gotWordPron({ phrase, transcribedWords, accent, accentedPron }));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
 //REDUCER
 
 export default (state = initialState, action) => {
