@@ -31,7 +31,7 @@ const IpaTranscription = props => {
       >
         <Grid item xs={3}>
           <Paper className={classes.paper}>
-            {`OD pronunciation: ${transcription.dictPron}`}
+            {`OD pronunciation: ${transcription.ipaStr}`}
           </Paper>
         </Grid>
 

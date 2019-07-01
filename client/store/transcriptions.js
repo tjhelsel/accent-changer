@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { odId, odKey } from '../../secrets';
-import { convertToAccent } from '../../utils/convertText';
+import { convertToAccent, convertToIpa } from '../../utils/convertText';
 
 //ACTION TYPES
 const GOT_WORD_PRON = 'GOT_WORD_PRON';
@@ -47,8 +47,9 @@ export const getPron = (word, accent) => {
       );
       const dictPron =
         data.results[0].lexicalEntries[0].pronunciations[1].phoneticSpelling;
-      const accentedPron = convertToAccent(accent, dictPron);
-      dispatch(gotWordPron({ word, dictPron, accent, accentedPron }));
+      const ipaStr = convertToIpa(word, dictPron);
+      const accentedPron = convertToAccent(accent, ipaStr);
+      dispatch(gotWordPron({ word, ipaStr, accent, accentedPron }));
     } catch (error) {
       console.error(error);
     }
