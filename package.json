@@ -1,7 +1,7 @@
 {
-  "name": "stackathon",
+  "name": "accentuize",
   "version": "1.0.0",
-  "description": "",
+  "description": "Accentuize is a single-page web app using web APIs to transform user’s text input into dynamically accented audio using Amazon Polly text-to-speech technology.",
   "main": "index.js",
   "scripts": {
     "build-client": "webpack",
@@ -19,7 +19,7 @@
     "url": "git+https://github.com/tjhelsel/accent-changer.git"
   },
   "author": "tjhelsel",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/tjhelsel/accent-changer/issues"
   },
@@ -31,6 +31,7 @@
     "express": "^4.17.1",
     "history": "^4.9.0",
     "jquery": "^3.4.1",
+    "lodash": "^4.17.14",
     "morgan": "^1.9.1",
     "pg": "^7.11.0",
     "pg-hstore": "^2.3.3",

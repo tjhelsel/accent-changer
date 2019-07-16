@@ -30,8 +30,8 @@ export const convertToIpa = (word, pron) => {
   newPron = newPron.replace(/(\(ə\))/, '');
   if (pron.includes('ˈ')) {
     newPron = newPron.replace(stressedSchwa, '$1ʌ');
-    newPron = newPron.replace(stressedI, '$1iː');
-    newPron = newPron.replace(stressedU, '$1uː');
+    // newPron = newPron.replace(stressedI, '$1iː');
+    // newPron = newPron.replace(stressedU, '$1uː');
     return newPron;
   } else {
     newPron = 'ˈ' + newPron;
