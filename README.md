@@ -11,5 +11,5 @@ according to the accent that the user has chosen (currently General American, No
 Finally, the user can send that transcription to Amazon's Polly text-to-speech service, and hear the word
 spoken aloud in the chosen accent.
 
-Built independently during a four-day hackathon.
+Built during a four-day hackathon.
 
